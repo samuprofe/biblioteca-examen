@@ -10,15 +10,13 @@
 El proyecto `biblioteca-base` es una API REST con Spring Boot que gestiona el catálogo de libros de la biblioteca del centro. Ya incluye:
 
 - Registro (`POST /auth/register`) e inicio de sesión (`POST /auth/login`) con **JWT**, configurado igual que en el proyecto de Matrículas.
-- En `SecurityConfig`, login y registro (`/auth/**`) son públicos y el resto de endpoints requieren estar autenticado, sin restricciones por rol. Los permisos por rol los configurarás en el ejercicio 5.
+- En `SecurityConfig`, login y registro (`/auth/**`) son públicos y el resto de endpoints requieren estar autenticado.
 - La entidad `Usuario`, con los roles guardados en un String (`ROLE_USER`, `ROLE_BIBLIOTECARIO`, `ROLE_ADMIN`).
 - La entidad `Libro`, con su repositorio, servicio, DTO (`LibroRequest` y `LibroResponse`) y el CRUD completo en `/libros`.
 - Dos excepciones que el `GlobalExceptionHandler` ya gestiona y que puedes lanzar desde tus servicios:
   - `RecursoNoEncontradoException` → responde **404** con `{"error": "mensaje"}`.
   - `ConflictoException` → responde **409** con `{"error": "mensaje"}`.
-- Los errores de validación (`@Valid`) responden **400** con un mapa `campo: mensaje`.
-
-Tienes que añadir la gestión de **préstamos de libros** y modificar la seguridad.
+- Los errores de validación responden **400** con un mapa `campo: mensaje`.
 
 ## Puesta en marcha
 
@@ -39,7 +37,6 @@ Tienes que añadir la gestión de **préstamos de libros** y modificar la seguri
 ## Normas
 
 - La aplicación y los endpoints que se piden **deben compilar y funcionar** para ser evaluados. No vale copiar y pegar código sin saber qué hace.
-- Sigue la estructura del proyecto: `entity`, `repository`, `DTO`, `service`, `controller`.
 - Los endpoints de préstamos **reciben y devuelven DTO**, nunca entidades.
 - Usa inyección de dependencias por constructor.
 - El usuario de un préstamo se obtiene **de la autenticación** (`authentication.getName()` devuelve el email; `Authentication` se inyecta como parámetro en el método del controlador). Ejemplo:
